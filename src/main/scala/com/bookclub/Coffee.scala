@@ -41,7 +41,7 @@ class Cafe {
     cup
   }
 
-  def buyCoffee(cc: CreditCard, p: PaymentsImplTwo): Coffee = {
+  def buyCoffee(cc: CreditCard, p: Payments): Coffee = {
     val cup = new Coffee()
 
     p.charge(cc, cup.price) // still a side-effect but a little better
@@ -78,17 +78,22 @@ class Cafe {
 object TestCoffee extends App {
   val cafe = new Cafe
 
-//  cafe.buyCoffeeWith(CreditCard())
-//  cafe.buyCoffee(CreditCard(), new PaymentsImpl)
-//  cafe.buyCoffee(CreditCard(), new PaymentsImplTwo)
-//  (new PaymentsImplTwo).foo()
+  cafe.buyCoffeeWith(CreditCard())
+  cafe.buyCoffee(CreditCard(), new PaymentsImpl)
+  cafe.buyCoffee(CreditCard(), new PaymentsImplTwo)
+  (new PaymentsImplTwo).foo()
   val result = cafe.buyCoffee(CreditCard()) // notice this doesn't print anything
   println(result)
-  val result2 = cafe.buyCoffee(CreditCard()) // notice this doesn't print anything
-  println(result == result2)
-  val result3 = cafe.buyCoffee(CreditCard()) // notice this doesn't print anything
-  println(result == result3)
-//  println(cafe.buyCoffees(CreditCard(), 3))
-//  println(Charge(CreditCard(), 5).combine(Charge(CreditCard(), 7.0)))
-//  println(Charge(CreditCard(), 5).combine(Charge(CreditCard("New Card"), 7.0))) // this will throw an exception
+  println(cafe.buyCoffees(CreditCard(), 3))
+  println(Charge(CreditCard(), 5).combine(Charge(CreditCard(), 7.0)))
+  println(Charge(CreditCard(), 5).combine(Charge(CreditCard("New Card"), 7.0))) // this will throw an exception
+}
+
+object PureFunctions extends App {
+  val x = new StringBuilder("hello")
+  println(x)
+  val y = x.append(" world")
+  println(y)
+  val z = x.append(" world")
+  println(z)
 }
